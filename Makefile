@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: clean test
 
 SRCS=\
 	trachtenberg.cpp\
@@ -7,6 +7,9 @@ SRCS=\
 OBJS=$(SRCS:.cpp=.o)
 
 CXXFLAGS=-Wall -pedantic
+
+test: trachtenberg
+	./trachtenberg
 
 trachtenberg: $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
