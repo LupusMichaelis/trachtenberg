@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-void test_method(Trachtenberg & method, std::pair<int, int> const & pair);
+void test_method(Trachtenberg & method, std::pair<long, long> const & pair);
 
 int main(int args, char *argv[])
 {
@@ -16,7 +16,7 @@ int main(int args, char *argv[])
 	TrachtenbergWikipedia wikipedia;
 	TrachtenbergLupus lupus;
 
-	std::vector<std::pair<int, int>> test_data
+	std::vector<std::pair<long, long>> test_data
 		{ {11, 11}
 		, {155, 11}
 		, {155, 1024}
@@ -26,6 +26,8 @@ int main(int args, char *argv[])
 		, {123, 1025}
 		, {124, 1025}
 		, {1025, 124}
+		, {999999, 9999}
+		, {999999, 99999999}
 		};
 
 	for(const auto &pair: test_data)
@@ -33,7 +35,7 @@ int main(int args, char *argv[])
 			test_method(method, pair);
 }
 
-void test_method(Trachtenberg & method, std::pair<int, int> const & pair)
+void test_method(Trachtenberg & method, std::pair<long, long> const & pair)
 {
 	std::cout << boost::format("%d * %d = %d Expected: %d \n")
 		% pair.first
@@ -47,8 +49,8 @@ void test_method(Trachtenberg & method, std::pair<int, int> const & pair)
 	// XXX Arbitrary size, as this is to be removed eventually. Good enough for testing.
 	char first[1024];
 	char second[1024];
-	std::sprintf(first, "%d", pair.first);
-	std::sprintf(second, "%d", pair.second);
+	std::sprintf(first, "%ld", pair.first);
+	std::sprintf(second, "%ld", pair.second);
 
 	assert(method.multiply(first, second) == std::to_string(pair.first * pair.second));
 }
