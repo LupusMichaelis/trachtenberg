@@ -11,6 +11,32 @@
 using std::size_t;
 using std::strlen;
 
+static
+void from_string(std::vector<char> & digit_representation, std::string const & ascii_representation)
+{
+	digit_representation.resize(ascii_representation.length());
+	std::transform
+		( ascii_representation.cbegin()
+		, ascii_representation.cend()
+		, digit_representation.begin()
+		, [] (std::string::value_type const & ascii) { return ascii - '0'; }
+		);
+}
+
+static
+void to_string(std::string & ascii_representation, std::vector<char> digit_representation)
+{
+	while(digit_representation.size() > 1 && 0 == digit_representation.front())
+		digit_representation.erase(digit_representation.begin());
+
+	ascii_representation.resize(digit_representation.size());
+	std::transform
+		( digit_representation.cbegin()
+		, digit_representation.cend()
+		, ascii_representation.begin()
+		, [] (std::string::value_type const & ascii) { return ascii + '0'; }
+		);
+}
 
 struct TrachtenbergLupus::Impl
 {
@@ -27,33 +53,6 @@ struct TrachtenbergLupus::Impl
 
 	void multiply();
 	void multiplystep(size_t cursor, digit_iterator starta, digit_iterator small_it);
-
-	static
-	void from_string(digit_vector & digit_representation, std::string const & ascii_representation)
-	{
-		digit_representation.resize(ascii_representation.length());
-		std::transform
-			( ascii_representation.cbegin()
-			, ascii_representation.cend()
-			, digit_representation.begin()
-			, [] (std::string::value_type const & ascii) { return ascii - '0'; }
-			);
-	}
-
-	static
-	void to_string(std::string & ascii_representation, digit_vector digit_representation)
-	{
-		while(digit_representation.size() > 1 && 0 == digit_representation.front())
-			digit_representation.erase(digit_representation.begin());
-
-		ascii_representation.resize(digit_representation.size());
-		std::transform
-			( digit_representation.cbegin()
-			, digit_representation.cend()
-			, ascii_representation.begin()
-			, [] (std::string::value_type const & ascii) { return ascii + '0'; }
-			);
-	}
 };
 
 TrachtenbergLupus::TrachtenbergLupus()
@@ -73,13 +72,13 @@ std::string const TrachtenbergLupus::multiply(std::string large, std::string sma
 	if(large.length() < small.length())
 		std::swap(large, small);
 
-	Impl::from_string(pimpl->large, large);
-	Impl::from_string(pimpl->small, small);
+	from_string(pimpl->large, large);
+	from_string(pimpl->small, small);
 
 	pimpl->multiply();
 
 	std::string result;
-	Impl::to_string(result, pimpl->solution);
+	to_string(result, pimpl->solution);
 
 	return result;
 }
