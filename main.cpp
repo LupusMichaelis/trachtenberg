@@ -10,7 +10,7 @@ int main(int args, char *argv[])
 {
 	std::cout << "Testing Trachtenberg\n";
 
-	Trachtenberg method;
+	TrachtenbergWikipedia method;
 
 	std::vector<std::pair<int, int>> test_data
 		{ {11, 11}

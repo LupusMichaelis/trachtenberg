@@ -9,7 +9,15 @@
 using std::size_t;
 using std::strlen;
 
-struct Trachtenberg::Impl
+Trachtenberg::Trachtenberg()
+{
+}
+
+Trachtenberg::~Trachtenberg()
+{
+}
+
+struct TrachtenbergWikipedia::Impl
 {
 	size_t intermediate;
 	char* solution = nullptr;
@@ -18,21 +26,22 @@ struct Trachtenberg::Impl
 	void multiplystep(size_t digits, const char* starta, const char* startb);
 };
 
-Trachtenberg::Trachtenberg()
-	: pimpl{new Impl}
+TrachtenbergWikipedia::TrachtenbergWikipedia()
+	: Trachtenberg {}
+	, pimpl{new Impl}
 {
 }
 
-Trachtenberg::~Trachtenberg()
+TrachtenbergWikipedia::~TrachtenbergWikipedia()
 {
 }
 
-std::string const Trachtenberg::multiply(std::string const& a, std::string const& b)
+std::string const TrachtenbergWikipedia::multiply(std::string const& a, std::string const& b)
 {
 	return multiply(a.c_str(), b.c_str());
 }
 
-char * Trachtenberg::multiply(const char* a, const char* b)
+char * TrachtenbergWikipedia::multiply(const char* a, const char* b)
 {
 	size_t large = strlen(a);
 	size_t small = strlen(b);
@@ -68,7 +77,7 @@ char * Trachtenberg::multiply(const char* a, const char* b)
 	return pimpl->answer;
 }
 
-void Trachtenberg::Impl::multiplystep(size_t digits, const char* starta, const char* startb)
+void TrachtenbergWikipedia::Impl::multiplystep(size_t digits, const char* starta, const char* startb)
 {
 	const char* digita = starta;
 	const char* digitb = startb;
