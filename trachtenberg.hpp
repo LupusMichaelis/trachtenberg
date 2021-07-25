@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <cstring>
+#include <string>
 #include <utility>
 
 using std::size_t;
@@ -42,7 +43,11 @@ public:
 			intermediate /= 10;
 		}
 	}
-	const char* result() const { return answer;	}
+
+	std::string const result() const
+	{
+		return answer;
+	}
 
 private:
 	size_t intermediate;
