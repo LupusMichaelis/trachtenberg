@@ -96,13 +96,22 @@ void TrachtenbergLupus::Impl::multiply()
 
 	size_t cursor = 0;
 	while(cursor != small.size())
-		multiplystep(++cursor, --large_it, small_it);
+	{
+		++cursor, --large_it;
+		multiplystep(cursor, large_it, small_it);
+	}
 
 	for(size_t d = cursor; d != large.size(); ++d)
-		multiplystep(cursor, --large_it, small_it);
+	{
+		--large_it;
+		multiplystep(cursor, large_it, small_it);
+	}
 
 	while(cursor != 1)
-		multiplystep(--cursor, large_it, --small_it);
+	{
+		--cursor, --small_it;
+		multiplystep(cursor, large_it, small_it);
+	}
 
 	while(intermediate)
 	{
