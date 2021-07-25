@@ -2,6 +2,7 @@
 
 SRCS=\
 	trachtenberg.cpp\
+	trachtenberg-wikipedia.cpp\
 	main.cpp
 
 OBJS=$(SRCS:.cpp=.o)
