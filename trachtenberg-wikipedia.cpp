@@ -6,17 +6,13 @@
 #include <string>
 #include <utility>
 
-using std::size_t;
-using std::strlen;
-
-
 struct TrachtenbergWikipedia::Impl
 {
-	size_t intermediate;
+	std::size_t intermediate;
 	char* solution = nullptr;
 	char* answer = nullptr;
 
-	void multiplystep(size_t digits, const char* starta, const char* startb);
+	void multiplystep(std::size_t digits, const char* starta, const char* startb);
 };
 
 TrachtenbergWikipedia::TrachtenbergWikipedia()
@@ -36,8 +32,8 @@ std::string const TrachtenbergWikipedia::multiply(std::string a, std::string b)
 
 char * TrachtenbergWikipedia::multiply(const char* a, const char* b)
 {
-	size_t large = strlen(a);
-	size_t small = strlen(b);
+	std::size_t large = std::strlen(a);
+	std::size_t small = std::strlen(b);
 	if (large == 0 || small == 0) {
 		pimpl->answer = pimpl->solution = new char[2]{ '0', '\0' };
 		return pimpl->answer;
@@ -49,14 +45,14 @@ char * TrachtenbergWikipedia::multiply(const char* a, const char* b)
 	pimpl->solution = new char[large + small];
 	pimpl->answer = pimpl->solution + large + small - 1;
 	*pimpl->answer = '\0'; // zero terminate
-	size_t digits = 0;
+	std::size_t digits = 0;
 	const char* starta = a + large;
 	const char* startb = b + small;
 	pimpl->intermediate = 0;
 	while (digits != small) {
 		pimpl->multiplystep(++digits, --starta, startb);
 	}
-	for (size_t d = digits; d != large; ++d) {
+	for (std::size_t d = digits; d != large; ++d) {
 		pimpl->multiplystep(digits, --starta, startb);
 	}
 	while (digits != 1) {
@@ -70,11 +66,11 @@ char * TrachtenbergWikipedia::multiply(const char* a, const char* b)
 	return pimpl->answer;
 }
 
-void TrachtenbergWikipedia::Impl::multiplystep(size_t digits, const char* starta, const char* startb)
+void TrachtenbergWikipedia::Impl::multiplystep(std::size_t digits, const char* starta, const char* startb)
 {
 	const char* digita = starta;
 	const char* digitb = startb;
-	for (size_t n = 0; n != digits; ++n) {
+	for (std::size_t n = 0; n != digits; ++n) {
 		--digitb;
 		intermediate += (*digita - '0') * (*digitb - '0'); // convert from ASCII string
 		++digita;

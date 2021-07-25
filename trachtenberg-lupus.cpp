@@ -8,9 +8,6 @@
 #include <utility>
 #include <vector>
 
-using std::size_t;
-using std::strlen;
-
 static
 void from_string(std::vector<char> & digit_representation, std::string const & ascii_representation)
 {
@@ -49,10 +46,10 @@ struct TrachtenbergLupus::Impl
 	digit_vector solution;
 	digit_iterator solution_end;
 
-	size_t intermediate;
+	std::size_t intermediate;
 
 	void multiply();
-	void multiplystep(size_t arrow, digit_iterator starta, digit_iterator small_it);
+	void multiplystep(std::size_t arrow, digit_iterator starta, digit_iterator small_it);
 };
 
 TrachtenbergLupus::TrachtenbergLupus()
@@ -93,14 +90,14 @@ void TrachtenbergLupus::Impl::multiply()
 
 	intermediate = 0;
 
-	size_t first_arrow = 0;
+	std::size_t first_arrow = 0;
 	while(first_arrow != small.size())
 	{
 		++first_arrow, --large_it;
 		multiplystep(first_arrow, large_it, small_it);
 	}
 
-	for(size_t second_arrow = first_arrow; second_arrow != large.size(); ++second_arrow)
+	for(std::size_t second_arrow = first_arrow; second_arrow != large.size(); ++second_arrow)
 	{
 		--large_it;
 		multiplystep(first_arrow, large_it, small_it);
@@ -119,9 +116,9 @@ void TrachtenbergLupus::Impl::multiply()
 	}
 }
 
-void TrachtenbergLupus::Impl::multiplystep(size_t pivot_arrow, digit_iterator large_it, digit_iterator small_it)
+void TrachtenbergLupus::Impl::multiplystep(std::size_t pivot_arrow, digit_iterator large_it, digit_iterator small_it)
 {
-	for(size_t arrow = 0; arrow != pivot_arrow; ++arrow)
+	for(std::size_t arrow = 0; arrow != pivot_arrow; ++arrow)
 	{
 		--small_it;
 		intermediate += *large_it * *small_it;
