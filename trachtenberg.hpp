@@ -13,6 +13,4 @@ public:
 private:
 	struct Impl;
 	std::unique_ptr<Impl> pimpl;
-
-	void multiplystep(size_t digits, const char* starta, const char* startb);
 };

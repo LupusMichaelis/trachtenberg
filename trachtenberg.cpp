@@ -14,6 +14,8 @@ struct Trachtenberg::Impl
 	size_t intermediate;
 	char* solution = nullptr;
 	char* answer = nullptr;
+
+	void multiplystep(size_t digits, const char* starta, const char* startb);
 };
 
 Trachtenberg::Trachtenberg()
@@ -50,13 +52,13 @@ char * Trachtenberg::multiply(const char* a, const char* b)
 	const char* startb = b + small;
 	pimpl->intermediate = 0;
 	while (digits != small) {
-		multiplystep(++digits, --starta, startb);
+		pimpl->multiplystep(++digits, --starta, startb);
 	}
 	for (size_t d = digits; d != large; ++d) {
-		multiplystep(digits, --starta, startb);
+		pimpl->multiplystep(digits, --starta, startb);
 	}
 	while (digits != 1) {
-		multiplystep(--digits, starta, --startb);
+		pimpl->multiplystep(--digits, starta, --startb);
 	}
 	while (pimpl->intermediate) {
 		*--pimpl->answer = '0' + pimpl->intermediate % 10;
@@ -66,15 +68,15 @@ char * Trachtenberg::multiply(const char* a, const char* b)
 	return pimpl->answer;
 }
 
-void Trachtenberg::multiplystep(size_t digits, const char* starta, const char* startb)
+void Trachtenberg::Impl::multiplystep(size_t digits, const char* starta, const char* startb)
 {
 	const char* digita = starta;
 	const char* digitb = startb;
 	for (size_t n = 0; n != digits; ++n) {
 		--digitb;
-		pimpl->intermediate += (*digita - '0') * (*digitb - '0'); // convert from ASCII string
+		intermediate += (*digita - '0') * (*digitb - '0'); // convert from ASCII string
 		++digita;
 	}
-	*--pimpl->answer = '0' + pimpl->intermediate % 10; // convert back to string
-	pimpl->intermediate /= 10;
+	*--answer = '0' + intermediate % 10; // convert back to string
+	intermediate /= 10;
 }
