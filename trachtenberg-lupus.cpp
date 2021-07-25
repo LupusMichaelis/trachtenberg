@@ -52,7 +52,7 @@ struct TrachtenbergLupus::Impl
 	size_t intermediate;
 
 	void multiply();
-	void multiplystep(size_t cursor, digit_iterator starta, digit_iterator small_it);
+	void multiplystep(size_t arrow, digit_iterator starta, digit_iterator small_it);
 };
 
 TrachtenbergLupus::TrachtenbergLupus()
@@ -93,23 +93,23 @@ void TrachtenbergLupus::Impl::multiply()
 
 	intermediate = 0;
 
-	size_t cursor = 0;
-	while(cursor != small.size())
+	size_t first_arrow = 0;
+	while(first_arrow != small.size())
 	{
-		++cursor, --large_it;
-		multiplystep(cursor, large_it, small_it);
+		++first_arrow, --large_it;
+		multiplystep(first_arrow, large_it, small_it);
 	}
 
-	for(size_t d = cursor; d != large.size(); ++d)
+	for(size_t second_arrow = first_arrow; second_arrow != large.size(); ++second_arrow)
 	{
 		--large_it;
-		multiplystep(cursor, large_it, small_it);
+		multiplystep(first_arrow, large_it, small_it);
 	}
 
-	while(cursor != 1)
+	while(first_arrow != 1)
 	{
-		--cursor, --small_it;
-		multiplystep(cursor, large_it, small_it);
+		--first_arrow, --small_it;
+		multiplystep(first_arrow, large_it, small_it);
 	}
 
 	while(intermediate)
@@ -119,9 +119,9 @@ void TrachtenbergLupus::Impl::multiply()
 	}
 }
 
-void TrachtenbergLupus::Impl::multiplystep(size_t cursor, digit_iterator large_it, digit_iterator small_it)
+void TrachtenbergLupus::Impl::multiplystep(size_t pivot_arrow, digit_iterator large_it, digit_iterator small_it)
 {
-	for(size_t n = 0; n != cursor; ++n)
+	for(size_t arrow = 0; arrow != pivot_arrow; ++arrow)
 	{
 		--small_it;
 		intermediate += *large_it * *small_it;
