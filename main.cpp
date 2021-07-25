@@ -1,7 +1,8 @@
 #include "trachtenberg.hpp"
 
-#include <iostream>
 #include <cassert>
+#include <boost/format.hpp>
+#include <iostream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -27,6 +28,12 @@ int main(int args, char *argv[])
 
 void test_method(Trachtenberg & method, std::pair<int, int> const & pair)
 {
+	std::cout << boost::format("%d * %d = %d Expected: %d \n")
+		% pair.first
+		% pair.second
+		% method.multiply(std::to_string(pair.first), std::to_string(pair.second))
+		% (pair.first * pair.second)
+		;
 	assert(method.multiply(std::to_string(pair.first), std::to_string(pair.second))
 			== std::to_string(pair.first * pair.second));
 
