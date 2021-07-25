@@ -1,4 +1,5 @@
 #include "trachtenberg.hpp"
+#include "trachtenberg-inline.hpp"
 
 #include <cassert>
 #include <boost/format.hpp>
@@ -15,6 +16,7 @@ int main(int args, char *argv[])
 
 	TrachtenbergWikipedia wikipedia;
 	TrachtenbergLupus lupus;
+	TrachtenbergInline inlinable;
 
 	std::vector<std::pair<long, long>> test_data
 		{ {11, 11}
@@ -34,7 +36,12 @@ int main(int args, char *argv[])
 		};
 
 	for(const auto &pair: test_data)
-		for(const auto & method: {std::ref<Trachtenberg>(wikipedia), std::ref<Trachtenberg>(lupus), })
+		for(const auto & method:
+			{ std::ref<Trachtenberg>(wikipedia)
+			, std::ref<Trachtenberg>(lupus)
+			, std::ref<Trachtenberg>(inlinable)
+			,
+			})
 			test_method(method, pair);
 }
 
