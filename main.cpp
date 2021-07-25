@@ -14,6 +14,7 @@ int main(int args, char *argv[])
 	std::cout << "Testing Trachtenberg\n";
 
 	TrachtenbergWikipedia wikipedia;
+	TrachtenbergLupus lupus;
 
 	std::vector<std::pair<int, int>> test_data
 		{ {11, 11}
@@ -22,7 +23,7 @@ int main(int args, char *argv[])
 		};
 
 	for(const auto &pair: test_data)
-		for(const auto & method: {std::ref<Trachtenberg>(wikipedia), })
+		for(const auto & method: {std::ref<Trachtenberg>(wikipedia), std::ref<Trachtenberg>(lupus), })
 			test_method(method, pair);
 }
 
