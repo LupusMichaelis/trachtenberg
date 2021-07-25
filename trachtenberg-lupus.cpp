@@ -21,24 +21,41 @@ void from_string(std::vector<char> & digit_representation, std::string const & a
 }
 
 static
-void to_string(std::string & ascii_representation, std::vector<char> digit_representation)
+void to_string(std::string & ascii_representation, std::vector<char> const & digit_representation)
 {
-	while(digit_representation.size() > 1 && 0 == digit_representation.front())
-		digit_representation.erase(digit_representation.begin());
-
-	ascii_representation.resize(digit_representation.size());
-	std::transform
+	// Where all digits are 0
+	if(std::all_of
 		( digit_representation.cbegin()
 		, digit_representation.cend()
+		, [] (auto const & value) { return 0 == value; }))
+	{
+		ascii_representation = "0";
+		return;
+	}
+
+	// Handle leading zeroes
+	auto from = std::find_if
+		( digit_representation.cbegin()
+		, digit_representation.cend()
+		, [] (auto const & value) { return 0 != value; }
+		);
+
+	if(digit_representation.cend() == from)
+		from = digit_representation.cbegin();
+
+	ascii_representation.resize(digit_representation.size() - std::distance(digit_representation.cbegin(), from));
+	std::transform
+		( from
+		, digit_representation.cend()
 		, ascii_representation.begin()
-		, [] (std::string::value_type const & ascii) { return ascii + '0'; }
+		, [] (std::string::value_type const & raw) { return raw + '0'; }
 		);
 }
 
 struct TrachtenbergLupus::Impl
 {
 	typedef std::vector<char> digit_vector;
-	typedef std::vector<char>::iterator digit_iterator;
+	typedef digit_vector::iterator digit_iterator;
 
 	digit_vector large;
 	digit_vector small;
