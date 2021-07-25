@@ -25,6 +25,11 @@ Trachtenberg::~Trachtenberg()
 {
 }
 
+void Trachtenberg::multiply(std::string const& a, std::string const& b)
+{
+	multiply(a.c_str(), b.c_str());
+}
+
 void Trachtenberg::multiply(const char* a, const char* b)
 {
 	size_t large = strlen(a);
