@@ -4,6 +4,7 @@
 #include <cassert>
 #include <string>
 #include <utility>
+#include <vector>
 
 int main(int args, char *argv[])
 {
@@ -11,9 +12,24 @@ int main(int args, char *argv[])
 
 	Trachtenberg method;
 
-	method.multiply(std::string("11"), std::string("11"));
-	assert(method.result() == std::to_string(11*11));
+	std::vector<std::pair<int, int>> test_data
+		{ {11, 11}
+		, {155, 11}
+		, {155, 1024}
+		};
 
-	method.multiply("11", "11");
-	assert(method.result() == std::to_string(11*11));
+	for(const auto &pair: test_data)
+	{
+		method.multiply(std::to_string(pair.first), std::to_string(pair.second));
+		assert(method.result() == std::to_string(pair.first * pair.second));
+
+		// XXX Arbitrary size, as this is to be removed eventually. Good enough for testing.
+		char first[1024];
+		char second[1024];
+		std::sprintf(first, "%d", pair.first);
+		std::sprintf(second, "%d", pair.second);
+
+		method.multiply(first, second);
+		assert(method.result() == std::to_string(pair.first * pair.second));
+	}
 }
