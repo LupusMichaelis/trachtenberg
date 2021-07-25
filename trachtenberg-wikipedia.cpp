@@ -1,5 +1,6 @@
 #include "trachtenberg.hpp"
 
+#include <algorithm>
 #include <cstddef>
 #include <cstring>
 #include <memory>
@@ -62,6 +63,12 @@ char * TrachtenbergWikipedia::multiply(const char* a, const char* b)
 		*--pimpl->answer = '0' + pimpl->intermediate % 10;
 		pimpl->intermediate /= 10;
 	}
+
+	if(std::all_of
+		( pimpl->answer
+		, pimpl->answer + strlen(pimpl->answer)
+		, [] (auto const & value) { return '0' == value; }))
+		pimpl->answer = pimpl->answer + strlen(pimpl->answer) - 1;
 
 	return pimpl->answer;
 }
