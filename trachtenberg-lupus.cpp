@@ -25,6 +25,15 @@ struct TrachtenbergLupus::Impl
 
 	size_t intermediate;
 
+	void reset()
+	{
+		large.clear();
+		small.clear();
+		solution.clear();
+		solution_end = solution.end();
+		intermediate = 0;
+	}
+
 	void multiply();
 	void multiplystep(size_t digits, digit_iterator starta, digit_iterator small_it);
 
@@ -43,7 +52,7 @@ struct TrachtenbergLupus::Impl
 	static
 	void to_string(std::string & ascii_representation, digit_vector digit_representation)
 	{
-		while(!digit_representation.empty() && 0 == digit_representation.front())
+		while(digit_representation.size() > 1 && 0 == digit_representation.front())
 			digit_representation.erase(digit_representation.begin());
 
 		ascii_representation.resize(digit_representation.size());
@@ -68,6 +77,8 @@ TrachtenbergLupus::~TrachtenbergLupus()
 
 std::string const TrachtenbergLupus::multiply(std::string large, std::string small)
 {
+	pimpl->reset();
+
 	if (large.length() == 0 || small.length() == 0)
 		return "0";
 
