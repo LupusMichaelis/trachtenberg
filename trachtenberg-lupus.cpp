@@ -26,7 +26,7 @@ struct TrachtenbergLupus::Impl
 	size_t intermediate;
 
 	void multiply();
-	void multiplystep(size_t digits, digit_iterator starta, digit_iterator small_it);
+	void multiplystep(size_t cursor, digit_iterator starta, digit_iterator small_it);
 
 	static
 	void from_string(digit_vector & digit_representation, std::string const & ascii_representation)
@@ -94,15 +94,15 @@ void TrachtenbergLupus::Impl::multiply()
 
 	intermediate = 0;
 
-	size_t digits = 0;
-	while(digits != small.size())
-		multiplystep(++digits, --large_it, small_it);
+	size_t cursor = 0;
+	while(cursor != small.size())
+		multiplystep(++cursor, --large_it, small_it);
 
-	for(size_t d = digits; d != large.size(); ++d)
-		multiplystep(digits, --large_it, small_it);
+	for(size_t d = cursor; d != large.size(); ++d)
+		multiplystep(cursor, --large_it, small_it);
 
-	while(digits != 1)
-		multiplystep(--digits, large_it, --small_it);
+	while(cursor != 1)
+		multiplystep(--cursor, large_it, --small_it);
 
 	while(intermediate)
 	{
@@ -111,9 +111,9 @@ void TrachtenbergLupus::Impl::multiply()
 	}
 }
 
-void TrachtenbergLupus::Impl::multiplystep(size_t digits, digit_iterator large_it, digit_iterator small_it)
+void TrachtenbergLupus::Impl::multiplystep(size_t cursor, digit_iterator large_it, digit_iterator small_it)
 {
-	for(size_t n = 0; n != digits; ++n)
+	for(size_t n = 0; n != cursor; ++n)
 	{
 		--small_it;
 		intermediate += *large_it * *small_it;
