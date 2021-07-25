@@ -68,9 +68,6 @@ TrachtenbergLupus::~TrachtenbergLupus()
 
 std::string const TrachtenbergLupus::multiply(std::string large, std::string small)
 {
-	if (large.length() == 0 || small.length() == 0)
-		return "0";
-
 	pimpl.reset(new Impl);
 
 	if(large.length() < small.length())
