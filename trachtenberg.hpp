@@ -8,10 +8,8 @@ public:
 	Trachtenberg();
 	~Trachtenberg();
 
-	void multiply(std::string const& a, std::string const& b);
-
-	void multiply(const char* a, const char* b);
-	std::string const result() const;
+	std::string const multiply(std::string const& a, std::string const& b);
+	char * multiply(const char* a, const char* b);
 private:
 	struct Impl;
 	std::unique_ptr<Impl> pimpl;

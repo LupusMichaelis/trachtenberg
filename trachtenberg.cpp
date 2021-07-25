@@ -25,18 +25,18 @@ Trachtenberg::~Trachtenberg()
 {
 }
 
-void Trachtenberg::multiply(std::string const& a, std::string const& b)
+std::string const Trachtenberg::multiply(std::string const& a, std::string const& b)
 {
-	multiply(a.c_str(), b.c_str());
+	return multiply(a.c_str(), b.c_str());
 }
 
-void Trachtenberg::multiply(const char* a, const char* b)
+char * Trachtenberg::multiply(const char* a, const char* b)
 {
 	size_t large = strlen(a);
 	size_t small = strlen(b);
 	if (large == 0 || small == 0) {
 		pimpl->answer = pimpl->solution = new char[2]{ '0', '\0' };
-		return;
+		return pimpl->answer;
 	}
 	if (large < small) {
 		std::swap(a, b);
@@ -62,6 +62,8 @@ void Trachtenberg::multiply(const char* a, const char* b)
 		*--pimpl->answer = '0' + pimpl->intermediate % 10;
 		pimpl->intermediate /= 10;
 	}
+
+	return pimpl->answer;
 }
 
 void Trachtenberg::multiplystep(size_t digits, const char* starta, const char* startb)
@@ -76,9 +78,3 @@ void Trachtenberg::multiplystep(size_t digits, const char* starta, const char* s
 	*--pimpl->answer = '0' + pimpl->intermediate % 10; // convert back to string
 	pimpl->intermediate /= 10;
 }
-
-std::string const Trachtenberg::result() const
-{
-	return pimpl->answer;
-}
-

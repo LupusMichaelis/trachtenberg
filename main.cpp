@@ -20,8 +20,8 @@ int main(int args, char *argv[])
 
 	for(const auto &pair: test_data)
 	{
-		method.multiply(std::to_string(pair.first), std::to_string(pair.second));
-		assert(method.result() == std::to_string(pair.first * pair.second));
+		assert(method.multiply(std::to_string(pair.first), std::to_string(pair.second))
+				== std::to_string(pair.first * pair.second));
 
 		// XXX Arbitrary size, as this is to be removed eventually. Good enough for testing.
 		char first[1024];
@@ -29,7 +29,6 @@ int main(int args, char *argv[])
 		std::sprintf(first, "%d", pair.first);
 		std::sprintf(second, "%d", pair.second);
 
-		method.multiply(first, second);
-		assert(method.result() == std::to_string(pair.first * pair.second));
+		assert(method.multiply(first, second) == std::to_string(pair.first * pair.second));
 	}
 }
