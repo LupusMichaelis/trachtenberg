@@ -29,7 +29,7 @@ TrachtenbergWikipedia::~TrachtenbergWikipedia()
 {
 }
 
-std::string const TrachtenbergWikipedia::multiply(std::string const& a, std::string const& b)
+std::string const TrachtenbergWikipedia::multiply(std::string a, std::string b)
 {
 	return multiply(a.c_str(), b.c_str());
 }
