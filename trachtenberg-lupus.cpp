@@ -25,15 +25,6 @@ struct TrachtenbergLupus::Impl
 
 	size_t intermediate;
 
-	void reset()
-	{
-		large.clear();
-		small.clear();
-		solution.clear();
-		solution_end = solution.end();
-		intermediate = 0;
-	}
-
 	void multiply();
 	void multiplystep(size_t digits, digit_iterator starta, digit_iterator small_it);
 
@@ -77,10 +68,10 @@ TrachtenbergLupus::~TrachtenbergLupus()
 
 std::string const TrachtenbergLupus::multiply(std::string large, std::string small)
 {
-	pimpl->reset();
-
 	if (large.length() == 0 || small.length() == 0)
 		return "0";
+
+	pimpl.reset(new Impl);
 
 	if(large.length() < small.length())
 		std::swap(large, small);
